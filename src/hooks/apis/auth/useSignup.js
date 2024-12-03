@@ -1,6 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from '@tanstack/react-query';
 
-import { signUpRequest } from "@/apis/auth";
+import { signUpRequest } from '@/apis/auth';
 
 export const useSignup = () => {
   const {
@@ -11,10 +11,10 @@ export const useSignup = () => {
   } = useMutation({
     mutationFn: signUpRequest,
     onSuccess: (data) => {
-      console.log("Successfully signed up", data);
+      console.log('Successfully signed up', data);
     },
     onError: (error) => {
-      console.log("Failed to signup", error);
+      console.log('Failed to signup', error);
     },
   });
   return {
