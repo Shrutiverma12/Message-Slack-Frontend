@@ -12,21 +12,20 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 
-export const SignupCard = () => {
-  const [signupForm, setsignupForm] = useState({
+export const SigninCard = () => {
+  const navigate = useNavigate();
+
+  const [signinForm, setsigninForm] = useState({
     email: '',
     password: '',
-    confirmPassword: '',
     username: '',
   });
-
-  const navigate = useNavigate();
   return (
     <>
       <Card classname='w-full h-full'>
         <CardHeader>
-          <CardTitle className='text-xl'>Sign Up</CardTitle>
-          <CardDescription>Sign up to access your account</CardDescription>
+          <CardTitle className='text-xl'>Sign In</CardTitle>
+          <CardDescription>Sign in to access your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form className='space-y-3'>
@@ -34,9 +33,9 @@ export const SignupCard = () => {
               placeholder='Email'
               required
               onChange={(e) =>
-                setsignupForm({ ...signupForm, email: e.target.value })
+                setsigninForm({ ...signinForm, email: e.target.value })
               }
-              value={signupForm.email}
+              value={signinForm.email}
               type='email'
               disabled={false}
             />
@@ -44,35 +43,13 @@ export const SignupCard = () => {
               placeholder='Password '
               required
               onChange={(e) =>
-                setsignupForm({ ...signupForm, password: e.target.value })
+                setsigninForm({ ...signinForm, password: e.target.value })
               }
-              value={signupForm.password}
+              value={signinForm.password}
               type='password'
               disabled={false}
             />
-            <Input
-              placeholder='Confirm Passsword'
-              required
-              onChange={(e) =>
-                setsignupForm({
-                  ...signupForm,
-                  confirmPassword: e.target.value,
-                })
-              }
-              value={signupForm.confirmPassword}
-              type='password'
-              disabled={false}
-            />
-            <Input
-              placeholder='Your username'
-              required
-              onChange={(e) =>
-                setsignupForm({ ...signupForm, username: e.target.value })
-              }
-              value={signupForm.username}
-              type='text'
-              disabled={false}
-            />
+
             <Button disabled={false} size='lg' type='submit' className='w-full'>
               Continue
             </Button>
@@ -80,13 +57,13 @@ export const SignupCard = () => {
 
           <Separator className='my-5' />
           <p className='text-sm text-muted-foreground mt-4'>
-            Already have an account?{' '}
+            Do not have an account?{' '}
             <span
+              onClick={() => navigate('/auth/signup')}
               className='text-sky-600 hover:underline cursor-pointer'
-              onClick={() => navigate('/auth/signin')}
             >
               {' '}
-              Sign In
+              Sign Up
             </span>
           </p>
         </CardContent>
