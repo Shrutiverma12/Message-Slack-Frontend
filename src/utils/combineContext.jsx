@@ -5,3 +5,13 @@ export default function combineContext(...providers) {
     }, children);
   };
 }
+
+/**
+ * <A>
+ *   <B>
+ *     <C>
+ *      {children}
+ *     </C>
+ *   </B>
+ * </A>
+ */
