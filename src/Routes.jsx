@@ -8,6 +8,7 @@ import { Auth } from '@/pages/Auth/Auth';
 import { Notfound } from '@/pages/Notfound/Notfound';
 
 import { ProtectedRoute } from './components/molecules/ProtectedRoute/ProtectedRoute';
+import { Home } from './pages/Home/Home';
 
 export const AppRoutes = () => {
   return (
@@ -32,9 +33,7 @@ export const AppRoutes = () => {
         path='/home'
         element={
           <ProtectedRoute>
-            <Auth>
-              <h1>Home</h1>
-            </Auth>
+            <Home />
           </ProtectedRoute>
         }
       />
