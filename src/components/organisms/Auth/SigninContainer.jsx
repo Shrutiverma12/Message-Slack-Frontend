@@ -8,7 +8,7 @@ import { SigninCard } from './SigninCard';
 export const SigninContainer = () => {
   const navigate = useNavigate();
 
-  const [signinForm, setsigninForm] = useState({ email: '', password: '' });
+  const [signinForm, setSigninForm] = useState({ email: '', password: '' });
 
   const [validationError, setValidationError] = useState(null);
 
@@ -41,7 +41,7 @@ export const SigninContainer = () => {
     <SigninCard
       onSigninFormSubmit={onSigninFormSubmit}
       signinForm={signinForm}
-      setsigninForm={setsigninForm}
+      setSigninForm={setSigninForm}
       validationError={validationError}
       error={error}
       isSuccess={isSuccess}

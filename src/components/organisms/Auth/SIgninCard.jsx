@@ -15,7 +15,7 @@ import { Separator } from '@/components/ui/separator';
 
 export const SigninCard = ({
   signinForm,
-  setsigninForm,
+  setSigninForm,
   onSigninFormSubmit,
   validationError,
   error,
@@ -26,7 +26,7 @@ export const SigninCard = ({
 
   return (
     <>
-      <Card classname='w-full h-full'>
+      <Card className='w-full h-full'>
         <CardHeader>
           <CardTitle className='text-xl'>Sign In</CardTitle>
           <CardDescription>Sign in to access your account</CardDescription>
@@ -59,7 +59,7 @@ export const SigninCard = ({
               placeholder='Email'
               required
               onChange={(e) =>
-                setsigninForm({ ...signinForm, email: e.target.value })
+                setSigninForm({ ...signinForm, email: e.target.value })
               }
               value={signinForm.email}
               type='email'
@@ -69,7 +69,7 @@ export const SigninCard = ({
               placeholder='Password '
               required
               onChange={(e) =>
-                setsigninForm({ ...signinForm, password: e.target.value })
+                setSigninForm({ ...signinForm, password: e.target.value })
               }
               value={signinForm.password}
               type='password'
@@ -90,6 +90,12 @@ export const SigninCard = ({
             >
               {' '}
               Sign Up
+            </span>
+            <span
+              onClick={() => navigate('/auth/forgetPassword')}
+              className='text-sky-600 hover:underline cursor-pointer ml-6'
+            >
+              Forget Your Password?
             </span>
           </p>
         </CardContent>
