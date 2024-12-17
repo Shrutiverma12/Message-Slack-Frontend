@@ -1,5 +1,4 @@
 import { ChevronDownIcon, ListFilterIcon, SquarePenIcon } from 'lucide-react';
-import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -23,12 +22,8 @@ export const WorkspacePanelHeader = ({ workspace }) => {
     (member) => member.memberId === auth?.user?._id && member.role === 'admin'
   );
 
-  const { openPreferences, setOpenPreferences } =
+  const { setOpenPreferences, setInitialValue } =
     useWorkspacePreferencesModal();
-
-  useEffect(() => {
-    console.log('Open', openPreferences);
-  }, [openPreferences]);
 
   return (
     <div className='flex items-center justify-between px-4 h-[50px] gap-0.5'>
@@ -56,7 +51,10 @@ export const WorkspacePanelHeader = ({ workspace }) => {
             <>
               <DropdownMenuItem
                 className='cursor-pointer py-2'
-                onClick={() => setOpenPreferences(true)}
+                onClick={() => {
+                  setOpenPreferences(true);
+                  setInitialValue(workspace.name);
+                }}
               >
                 Preferences
               </DropdownMenuItem>
