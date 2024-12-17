@@ -1,4 +1,5 @@
 import { TrashIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import {
   Dialog,
@@ -6,14 +7,42 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useDeleteWorkspace } from '@/hooks/apis/workspaces/useDeleteWorkspace';
 import { useWorkspacePreferencesModal } from '@/hooks/context/useWorkspacePreferencesModal';
+import { useToast } from '@/hooks/use-toast';
 
 export const WorkspacePreferencesModal = () => {
-  const { initialValue, openPreferences, setOpenPreferences } =
+  const { initialValue, openPreferences, setOpenPreferences, workspace } =
     useWorkspacePreferencesModal();
+
+  const { toast } = useToast();
+
+  const [workspaceId, setWorksaceId] = useState(null);
+
+  const { deleteWorkspaceMutation } = useDeleteWorkspace(workspaceId);
 
   function handleClose() {
     setOpenPreferences(false);
+  }
+
+  useEffect(() => {
+    setWorksaceId(workspace?._id);
+  }, [workspace]);
+
+  async function handleDelete() {
+    try {
+      await deleteWorkspaceMutation();
+      toast({
+        title: 'Workspace deleted successfully',
+        type: 'success',
+      });
+    } catch (error) {
+      console.log('Error in deleting workspace', error);
+      toast({
+        title: 'Error in deleting workspace',
+        type: 'error',
+      });
+    }
   }
 
   return (
@@ -30,7 +59,10 @@ export const WorkspacePreferencesModal = () => {
             </div>
             <p className='text-sm'>{initialValue}</p>
           </div>
-          <button className='flex items-center gap-x-2 py-4 px-5 bg-white rounded-lg border cursor-pointer hover:bg-gray-50'>
+          <button
+            className='flex items-center gap-x-2 py-4 px-5 bg-white rounded-lg border cursor-pointer hover:bg-gray-50'
+            onClick={handleDelete}
+          >
             <TrashIcon className='size-5' />
             <p className='text-sm font-semibold'>Delete Workspace</p>
           </button>
