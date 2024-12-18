@@ -39,7 +39,7 @@ export const CreateChannelModel = () => {
             required
           />
           <div className='flex justify-end mt-4'>
-            <Button>Craete Channel</Button>
+            <Button>Create Channel</Button>
           </div>
         </form>
       </DialogContent>
