@@ -1,19 +1,24 @@
 import 'quill/dist/quill.snow.css';
 
+import { ImageIcon } from 'lucide-react';
 import Quill from 'quill';
 import { useEffect, useRef, useState } from 'react';
 import { PiTextAa } from 'react-icons/pi';
 
 import { Button } from '@/components/ui/button';
 
-export const Editor = ({
-  variant = 'create',
-  onSubmit,
-  onCancel,
-  placeHolder,
-  disabled,
-  defaultValue,
-}) => {
+import { Hint } from '../Hint/Hint';
+
+export const Editor = (
+  {
+    // variant = 'create',
+    // onSubmit,
+    // onCancel,
+    // placeHolder,
+    // disabled,
+    // defaultValue,
+  }
+) => {
   const [text, setText] = useState('');
   const [isToolbarVisible, setIsToolbarVisible] = useState(false);
 
@@ -81,17 +86,33 @@ export const Editor = ({
 
   return (
     <div className='flex flex-col'>
-      <div className='flex flex-col border border-slate-300 rounded-md overflow-hidden focus-within:shadow-sm focus-within:border-slate-400 bg-white transition focus-within:'>
+      <div className='flex flex-col border border-slate-300 rounded-md overflow-hidden focus-within:shadow-sm focus-within:border-slate-400 bg-white '>
         <div ref={containerRef} />
-        <div className='flex px-2 pb-2 z-[5] '>
-          <Button
-            size='iconSm'
-            variant='ghost'
-            disabled={false}
-            onClick={toggleToolbar}
+        <div className='flex px-4 pb-2 z-[5] '>
+          <Hint
+            label={!isToolbarVisible ? 'Show text' : 'Hide toolbar'}
+            side='bottom'
+            align='center'
           >
-            <PiTextAa className='size-4' />
-          </Button>
+            <Button
+              size='iconSm'
+              variant='ghost'
+              disabled={false}
+              onClick={toggleToolbar}
+            >
+              <PiTextAa className='size-4' />
+            </Button>
+          </Hint>
+          <Hint label='image' side='bottom' align='center'>
+            <Button
+              size='iconSm'
+              variant='ghost'
+              disabled={false}
+              onClick={() => {}}
+            >
+              <ImageIcon className='size-4 ml-2' />
+            </Button>
+          </Hint>
         </div>
       </div>
       <p className='p-2 text-[10px] text-muted-foreground flex justify-end'>
