@@ -1,6 +1,7 @@
+import 'quill/dist/quill.snow.css';
+
 import Quill from 'quill';
 import { useEffect, useRef, useState } from 'react';
-import { handler } from 'tailwindcss-animate';
 
 export const Editor = ({
   variant = 'create',
@@ -72,6 +73,9 @@ export const Editor = ({
       <div className='flex flex-col border border-slate-300 rounded-md overflow-hidden focus-within:shadow-sm focus-within:border-slate-400 bg-white transition focus-within:'>
         <div ref={containerRef} />
       </div>
+      <p className='p-2 text-[10px] text-muted-foreground flex justify-end'>
+        <strong>Shift+Enter</strong>&nbsp; to add a new line
+      </p>
     </div>
   );
 };
