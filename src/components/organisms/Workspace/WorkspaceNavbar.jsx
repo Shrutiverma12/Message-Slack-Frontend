@@ -12,7 +12,7 @@ export const WorkspaceNavbar = () => {
 
   const navigate = useNavigate();
 
-  const { logOut } = useAuth();
+  const { logout } = useAuth();
 
   const { isFetching, workspace, error, isSuccess } =
     useGetWorkspaceById(workspaceId);
@@ -23,14 +23,22 @@ export const WorkspaceNavbar = () => {
     if (!isFetching && !isSuccess && error) {
       console.log('Error fetching workspace', error.status);
       if (error.status === 403) {
-        logOut();
+        logout();
         navigate('/auth/signin');
       }
     }
     if (workspace) {
       setCurrentWorkspace(workspace);
     }
-  }, [workspace, setCurrentWorkspace, isSuccess, error, isFetching, navigate]);
+  }, [
+    workspace,
+    setCurrentWorkspace,
+    isSuccess,
+    error,
+    isFetching,
+    navigate,
+    logout,
+  ]);
 
   if (isFetching) {
     return <LucideLoader2 className='animate-spin ml-2' />;

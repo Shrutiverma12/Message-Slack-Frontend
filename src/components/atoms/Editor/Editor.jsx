@@ -88,7 +88,7 @@ export const Editor = (
     <div className='flex flex-col'>
       <div className='flex flex-col border border-slate-300 rounded-md overflow-hidden focus-within:shadow-sm focus-within:border-slate-400 bg-white '>
         <div ref={containerRef} />
-        <div className='flex px-4 pb-2 z-[5] '>
+        <div className='flex px-2 pb-2 z-[5] '>
           <Hint
             label={!isToolbarVisible ? 'Show text' : 'Hide toolbar'}
             side='bottom'
