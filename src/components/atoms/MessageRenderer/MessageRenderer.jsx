@@ -7,27 +7,26 @@ export const MessageRenderer = ({ value }) => {
   const rendererRef = useRef(null);
   const [isEmpty, setIsEmpty] = useState(false);
 
-  console.log('Renderer ref', rendererRef.current);
-
   useEffect(() => {
     if (!rendererRef.current) return;
 
-    console.log('value is ', rendererRef.current);
+    console.log('Renderer ref', rendererRef.current);
+    console.log('Value ', value);
 
-    const quil = new Quill(document.createElement('div'), {
+    const quill = new Quill(document.createElement('div'), {
       theme: 'snow',
     });
 
     //Disable editing;
-    quil.disable();
+    quill.disable();
     const content = JSON.parse(value);
-    quil.setContents(content);
-    console.log('Content', quil.root.innerHTML);
+    quill.setContents(content);
+    console.log('Content', quill.root.innerHTML);
 
-    const isContentEmpty = quil.getText().trim.length === 0;
+    const isContentEmpty = quill.getText().trim().length === 0;
     setIsEmpty(isContentEmpty);
 
-    rendererRef.current.innerHTML = quil.root.innerHTML;
+    rendererRef.current.innerHTML = quill.root.innerHTML;
   }, [value]);
 
   if (isEmpty) return null;
