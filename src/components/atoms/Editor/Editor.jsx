@@ -3,22 +3,21 @@ import 'quill/dist/quill.snow.css';
 import { ImageIcon } from 'lucide-react';
 import Quill from 'quill';
 import { useEffect, useRef, useState } from 'react';
+import { MdSend } from 'react-icons/md';
 import { PiTextAa } from 'react-icons/pi';
 
 import { Button } from '@/components/ui/button';
 
 import { Hint } from '../Hint/Hint';
 
-export const Editor = (
-  {
-    // variant = 'create',
-    // onSubmit,
-    // onCancel,
-    // placeHolder,
-    // disabled,
-    // defaultValue,
-  }
-) => {
+export const Editor = ({
+  // variant = 'create',
+  onSubmit,
+  // onCancel,
+  // placeHolder,
+  // disabled,
+  // defaultValue,
+}) => {
   const [text, setText] = useState('');
   const [isToolbarVisible, setIsToolbarVisible] = useState(false);
 
@@ -95,7 +94,7 @@ export const Editor = (
             align='center'
           >
             <Button
-              size='iconSm'
+              size='sm'
               variant='ghost'
               disabled={false}
               onClick={toggleToolbar}
@@ -103,14 +102,28 @@ export const Editor = (
               <PiTextAa className='size-4' />
             </Button>
           </Hint>
-          <Hint label='image' side='bottom' align='center'>
+          <Hint label='image'>
             <Button
-              size='iconSm'
+              size='sm'
               variant='ghost'
               disabled={false}
               onClick={() => {}}
             >
-              <ImageIcon className='size-4 ml-2' />
+              <ImageIcon className='size-4 ' />
+            </Button>
+          </Hint>
+          <Hint label='Send Message'>
+            <Button
+              size='sm'
+              className='ml-auto bg-[#007a6a] hover:bg-[#007a6a]/80 text-white'
+              onClick={() => {
+                onSubmit({
+                  body: JSON.stringify(quillRef.current?.getContents()),
+                });
+              }}
+              disabled={false}
+            >
+              <MdSend />
             </Button>
           </Hint>
         </div>
