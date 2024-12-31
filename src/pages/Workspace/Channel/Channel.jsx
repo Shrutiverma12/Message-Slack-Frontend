@@ -4,7 +4,9 @@ import { useParams } from 'react-router-dom';
 
 import { ChannelHeader } from '@/components/molecules/Channel/ChannelHeader';
 import { ChatInput } from '@/components/molecules/ChatInput/ChatInput';
+import { Message } from '@/components/molecules/Message/Message';
 import { useGetChannelById } from '@/hooks/apis/channels/useGetChannelById';
+import { useGetChannelMessages } from '@/hooks/apis/channels/useGetChannelMessages';
 import { useSocket } from '@/hooks/context/useSocket';
 
 export const Channel = () => {
@@ -13,6 +15,8 @@ export const Channel = () => {
   const { channelDetails, isFetching, isError } = useGetChannelById(channelId);
 
   const { joinChannel } = useSocket();
+
+  const { messages } = useGetChannelMessages(channelId);
 
   useEffect(() => {
     if (!isFetching && !isError) {
@@ -40,6 +44,17 @@ export const Channel = () => {
   return (
     <div className='flex flex-col h-full'>
       <ChannelHeader name={channelDetails?.name} />
+      {messages?.map((message) => {
+        return (
+          <Message
+            key={message._id}
+            body={message.body}
+            authorImage={message.senderId?.avatar}
+            authorName={message.senderId?.username}
+            createdAt={message.createdAt}
+          />
+        );
+      })}
       <div className='flex-1' />
       <ChatInput />
     </div>
