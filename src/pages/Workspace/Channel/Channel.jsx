@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { Loader2Icon, TriangleAlertIcon } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ChannelHeader } from '@/components/molecules/Channel/ChannelHeader';
@@ -13,7 +13,7 @@ import { useSocket } from '@/hooks/context/useSocket';
 
 export const Channel = () => {
   const { channelId } = useParams();
-
+  const messageContainerListRef = useRef();
   const queryClient = useQueryClient();
 
   const { channelDetails, isFetching, isError } = useGetChannelById(channelId);
@@ -22,6 +22,13 @@ export const Channel = () => {
   const { setMessageList, messageList } = useChannelMessages();
 
   const { messages, isSuccess } = useGetChannelMessages(channelId);
+
+  useEffect(() => {
+    if (messageContainerListRef.current) {
+      messageContainerListRef.current.scrollTop =
+        messageContainerListRef.current.scrollHeight;
+    }
+  }, [messageList]);
 
   useEffect(() => {
     queryClient.invalidateQueries('getPaginatedMessages');
@@ -60,17 +67,22 @@ export const Channel = () => {
   return (
     <div className='flex flex-col h-full'>
       <ChannelHeader name={channelDetails?.name} />
-      {messageList?.map((message) => {
-        return (
-          <Message
-            key={message._id}
-            body={message.body}
-            authorImage={message.senderId?.avatar}
-            authorName={message.senderId?.username}
-            createdAt={message.createdAt}
-          />
-        );
-      })}
+      <div
+        ref={messageContainerListRef}
+        className='flex-5 overflow-y-auto p-5 gap-y-2'
+      >
+        {messageList?.map((message) => {
+          return (
+            <Message
+              key={message._id}
+              body={message.body}
+              authorImage={message.senderId?.avatar}
+              authorName={message.senderId?.username}
+              createdAt={message.createdAt}
+            />
+          );
+        })}
+      </div>
       <div className='flex-1' />
       <ChatInput />
     </div>
