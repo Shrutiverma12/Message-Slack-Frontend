@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { Loader2Icon, TriangleAlertIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -7,22 +8,37 @@ import { ChatInput } from '@/components/molecules/ChatInput/ChatInput';
 import { Message } from '@/components/molecules/Message/Message';
 import { useGetChannelById } from '@/hooks/apis/channels/useGetChannelById';
 import { useGetChannelMessages } from '@/hooks/apis/channels/useGetChannelMessages';
+import { useChannelMessages } from '@/hooks/context/useChannelMessages';
 import { useSocket } from '@/hooks/context/useSocket';
 
 export const Channel = () => {
   const { channelId } = useParams();
 
+  const queryClient = useQueryClient();
+
   const { channelDetails, isFetching, isError } = useGetChannelById(channelId);
 
   const { joinChannel } = useSocket();
+  const { setMessageList, messageList } = useChannelMessages();
 
-  const { messages } = useGetChannelMessages(channelId);
+  const { messages, isSuccess } = useGetChannelMessages(channelId);
+
+  useEffect(() => {
+    queryClient.invalidateQueries('getPaginatedMessages');
+  }, [channelId, queryClient]);
 
   useEffect(() => {
     if (!isFetching && !isError) {
       joinChannel(channelId);
     }
   }, [isFetching, isError, joinChannel, channelId]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log('Channel message is fetched');
+      setMessageList(messages);
+    }
+  }, [isSuccess, messages, setMessageList]);
 
   if (isFetching) {
     return (
@@ -44,7 +60,7 @@ export const Channel = () => {
   return (
     <div className='flex flex-col h-full'>
       <ChannelHeader name={channelDetails?.name} />
-      {messages?.map((message) => {
+      {messageList?.map((message) => {
         return (
           <Message
             key={message._id}
