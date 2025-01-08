@@ -1,6 +1,6 @@
 import 'quill/dist/quill.snow.css';
 
-import { ImageIcon } from 'lucide-react';
+import { ImageIcon, XIcon } from 'lucide-react';
 import Quill from 'quill';
 import { useEffect, useRef, useState } from 'react';
 import { MdSend } from 'react-icons/md';
@@ -18,15 +18,15 @@ export const Editor = ({
   // disabled,
   // defaultValue,
 }) => {
-  const [text, setText] = useState('');
   const [isToolbarVisible, setIsToolbarVisible] = useState(false);
 
+  const [image, setImage] = useState(null);
+
   const containerRef = useRef();
-  const submitRef = useRef();
-  const disabledRef = useRef();
   const placeHolderRef = useRef();
   const quillRef = useRef();
   const defaultValueRef = useRef();
+  const imageInputRef = useRef(null);
 
   function toggleToolbar() {
     setIsToolbarVisible(!isToolbarVisible);
@@ -87,6 +87,25 @@ export const Editor = ({
     <div className='flex flex-col'>
       <div className='flex flex-col border border-slate-300 rounded-md overflow-hidden focus-within:shadow-sm focus-within:border-slate-400 bg-white '>
         <div ref={containerRef} />
+        {image && (
+          <div className='p-2'>
+            <div className='relative size-[60px] flex items-center justify-center group/image'>
+              <button
+                className=' group-hover/image:file rounded-full bg-black/70 hover:bg-black absolute -top-2.5 -right-2.5 text-white size-6 z-[5] border-2 border-white items-center justify-center'
+                onClick={() => {
+                  setImage(null);
+                  imageInputRef.current.value = '';
+                }}
+              >
+                <XIcon className='size-4' />
+              </button>
+              <img
+                src={URL.createObjectURL(image)}
+                className='rounded-xl overflow-hidden border object-cover '
+              />
+            </div>
+          </div>
+        )}
         <div className='flex px-2 pb-2 z-[5] '>
           <Hint
             label={!isToolbarVisible ? 'Show text' : 'Hide toolbar'}
@@ -102,16 +121,27 @@ export const Editor = ({
               <PiTextAa className='size-4' />
             </Button>
           </Hint>
+
           <Hint label='image'>
             <Button
               size='sm'
               variant='ghost'
               disabled={false}
-              onClick={() => {}}
+              onClick={() => {
+                imageInputRef.current.click();
+              }}
             >
               <ImageIcon className='size-4 ' />
             </Button>
           </Hint>
+
+          <input
+            type='file'
+            className='hidden'
+            ref={imageInputRef}
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+
           <Hint label='Send Message'>
             <Button
               size='sm'
@@ -120,8 +150,10 @@ export const Editor = ({
                 const messageContent = JSON.stringify(
                   quillRef.current?.getContents()
                 );
-                onSubmit({ body: messageContent });
+                onSubmit({ body: messageContent, image });
                 quillRef.current?.setText('');
+                setImage(null);
+                imageInputRef.current.value = '';
               }}
               disabled={false}
             >

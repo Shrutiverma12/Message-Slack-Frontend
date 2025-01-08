@@ -13,7 +13,7 @@ import { useSocket } from '@/hooks/context/useSocket';
 
 export const Channel = () => {
   const { channelId } = useParams();
-  const messageContainerListRef = useRef();
+  const messageContainerListRef = useRef(null);
   const queryClient = useQueryClient();
 
   const { channelDetails, isFetching, isError } = useGetChannelById(channelId);
@@ -28,7 +28,7 @@ export const Channel = () => {
       messageContainerListRef.current.scrollTop =
         messageContainerListRef.current.scrollHeight;
     }
-  }, [messageList]);
+  }, [messageList, setMessageList]);
 
   useEffect(() => {
     queryClient.invalidateQueries('getPaginatedMessages');
@@ -42,8 +42,7 @@ export const Channel = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log('Channel message is fetched');
-      setMessageList(messages);
+      setMessageList(messages.reverse());
     }
   }, [isSuccess, messages, setMessageList]);
 
@@ -79,6 +78,7 @@ export const Channel = () => {
               authorImage={message.senderId?.avatar}
               authorName={message.senderId?.username}
               createdAt={message.createdAt}
+              image={message?.image}
             />
           );
         })}

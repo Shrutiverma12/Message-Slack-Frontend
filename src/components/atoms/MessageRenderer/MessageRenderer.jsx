@@ -2,17 +2,11 @@ import Quill from 'quill';
 import { useEffect, useRef, useState } from 'react';
 
 export const MessageRenderer = ({ value }) => {
-  console.log('Incoming Value', value);
-
   const rendererRef = useRef(null);
   const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {
     if (!rendererRef.current) return;
-
-    console.log('Renderer ref', rendererRef.current);
-    console.log('Value ', value);
-
     const quill = new Quill(document.createElement('div'), {
       theme: 'snow',
     });
