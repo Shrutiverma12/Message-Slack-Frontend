@@ -10,7 +10,6 @@ export const useGetChannelMessages = (channelId) => {
     queryFn: () =>
       getPaginatedMessages({
         channelId,
-        sort: { createdAt: 1 },
         limit: 10,
         offset: 0,
         token: auth?.token,

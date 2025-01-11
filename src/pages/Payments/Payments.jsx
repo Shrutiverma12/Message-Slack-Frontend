@@ -6,13 +6,15 @@ import { useCreateOrder } from '@/hooks/apis/payments/useCreateOrder';
 export const Payments = () => {
   const [amount, setAmount] = useState('');
   const [orderResponse, setOrderResponse] = useState(null);
-  const { createOrderMutation, error, isSuccess, isPending } = useCreateOrder();
+  const { createOrderMutation, isPending, error, isSuccess } = useCreateOrder();
 
   async function handleFormSubmit(e) {
     e.preventDefault();
     const response = await createOrderMutation(amount * 100);
-    setOrderResponse(response?.data?.data);
+    console.log('order response', response);
+    setOrderResponse(response);
   }
+
   return (
     <div className='flex items-center justify-center min-h-screen bg-gray-100'>
       <div className='bg-white p-8 rounded-lg shadow-md w-full max-w-md'>

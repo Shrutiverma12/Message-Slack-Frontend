@@ -25,7 +25,6 @@ export const ChatInput = () => {
       });
       fileUrl = responseCloudinary;
       console.log('File upload', responseCloudinary);
-      //fileUrl = preSignedUrl;
       //https://res.cloudinary.com/dpwwyvfvf/image/upload/s--4-abbUeu--/1736323992960?_a=BAMCkGWM0
     }
     socket?.emit(

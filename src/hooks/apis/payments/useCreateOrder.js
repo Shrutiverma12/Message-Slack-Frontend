@@ -13,17 +13,18 @@ export const useCreateOrder = () => {
     isPending,
   } = useMutation({
     mutationFn: (amount) => createOrderRequest({ token: auth?.token, amount }),
-    onSuccess: () => {
-      console.log('Order created successfully');
+    onSuccess: (data) => {
+      console.log('Order created successfully', data);
     },
     onError: (error) => {
       console.log('Error in creating order', error);
     },
   });
+
   return {
-    createOrderMutation,
     error,
     isSuccess,
     isPending,
+    createOrderMutation,
   };
 };
