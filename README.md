@@ -9,3 +9,5 @@ Currently, two official plugins are available:
 
 ![Sample Image](![image](https://github.com/user-attachments/assets/fc3922cd-0877-4edd-9937-9659ad444c78)
  "Sample Image")
+
+![App Screenshot]([./assets/screenshot.png](https://github.com/user-attachments/assets/fc3922cd-0877-4edd-9937-9659ad444c78) "Application Screenshot")
