@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SigninCard } from '@/components/organisms/Auth/SigninCard';
+import { SigninCard } from '/SigninCard';
 import { useSignin } from '@/hooks/apis/auth/useSignin';
 
 export const SigninContainer = () => {
